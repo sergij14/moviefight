@@ -159,12 +159,12 @@ header .title:hover {
 .dropdown {
   width: 100%;
   position: relative;
-  visibility: hidden;
-  opacity: 0;
+  display: none;
 }
 
 .results {
-  position: relative;
+  width: 100%;
+  position: absolute;
   left: 0;
   top: 0.5rem;
   background: var(--color-light);
@@ -187,7 +187,6 @@ header .title:hover {
   background: transparent;
   margin-top: 0.5em;
   border-radius: 0.5rem;
-  transition: all 250ms ease-in-out;
 }
 
 .dropdown-item:first-child {
@@ -286,9 +285,7 @@ footer a:focus {
 
 /* Utility Classes */
 .is-active {
-  opacity: 1;
-  visibility: visible;
-  transition: all 350ms ease-in;
+  display: block;
 }
 
 .is-hidden {
