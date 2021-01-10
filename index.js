@@ -16,7 +16,7 @@ const autocompleteConfig = {
 
   async fetchData(searchTerm) {
     const resp = await fetch(
-      `http://www.omdbapi.com/?apikey=4f064761&s=${searchTerm}`
+      `https://www.omdbapi.com/?apikey=4f064761&s=${searchTerm}`
     );
     const data = await resp.json();
     if (data.Error) return [];
@@ -47,7 +47,7 @@ let rightMovie;
 
 const onMovieSelect = async function (movie, element, side) {
   const resp = await fetch(
-    `http://www.omdbapi.com/?apikey=4f064761&i=${movie.imdbID}`
+    `https://www.omdbapi.com/?apikey=4f064761&i=${movie.imdbID}`
   );
   let data = await resp.json();
   document.querySelector(element).innerHTML = movieMarkup(data);
