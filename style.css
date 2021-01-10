@@ -164,13 +164,15 @@ header .title:hover {
 }
 
 .results {
-  position: absolute;
+  position: relative;
   left: 0;
   top: 0.5rem;
   background: var(--color-light);
   border: 1px var(--color-light-darker) solid;
   border-radius: 0.5rem;
   padding: 0.5em;
+  max-height: 40rem;
+  overflow-y: scroll;
 }
 
 .results a {
