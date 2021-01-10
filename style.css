@@ -47,6 +47,10 @@ figure .image img {
   margin-bottom: 20px;
 }
 
+.title {
+  font-size: 1.5rem;
+}
+
 .forms {
   display: flex;
   justify-content: space-around;
@@ -81,4 +85,9 @@ figure .image img {
 .dropdown-item img {
   height: 50px;
   margin-right: 10px;
+}
+
+footer {
+  border-top: 1px #dddddd dashed;
+  margin-top: 3rem;
 }
