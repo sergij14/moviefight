@@ -31,10 +31,6 @@ figure .image img {
   overflow-y: scroll;
 }
 
-.hero-body .title {
-  text-align: center;
-}
-
 .hero-body .title a {
   color: inherit;
 }
@@ -49,6 +45,12 @@ figure .image img {
 
 .title {
   font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.hero-body .title {
+  text-align: center;
+  font-size: 2.2rem;
 }
 
 .forms {
