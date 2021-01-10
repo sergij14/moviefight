@@ -6,7 +6,7 @@ const autocompleteConfig = {
     return `
     <img src="${imgSrc}" />
 
-    ${movie.Title} (${movie.Year})
+    <span>${movie.Title} (${movie.Year})</span>
     `;
   },
 
@@ -50,7 +50,7 @@ const onMovieSelect = async function (movie, element, side) {
     `https://www.omdbapi.com/?apikey=4f064761&i=${movie.imdbID}`
   );
   let data = await resp.json();
-  document.querySelector(element).innerHTML = movieMarkup(data);
+  document.querySelector(element).innerHTML = itemMarkup(data);
   if (side === "left") {
     leftMovie = data;
   } else {
@@ -63,8 +63,12 @@ const onMovieSelect = async function (movie, element, side) {
 };
 
 const runComparison = function () {
-  const leftStats = document.querySelectorAll("#left-summary .notification");
-  const rightStats = document.querySelectorAll("#right-summary .notification");
+  const leftStats = document.querySelectorAll(
+    "#left-summary .item-info article"
+  );
+  const rightStats = document.querySelectorAll(
+    "#right-summary .item-info article"
+  );
 
   leftStats.forEach((leftStat, index) => {
     const rightStat = rightStats[index];
@@ -72,32 +76,24 @@ const runComparison = function () {
     const leftValue = leftStat.dataset.value;
     const rightValue = rightStat.dataset.value;
 
-    console.log(rightValue, leftValue);
-
     if (rightValue > leftValue) {
-      rightStat.classList.remove("is-primary");
-      rightStat.classList.add("is-success");
-
-      leftStat.classList.remove("is-primary");
-      leftStat.classList.add("is-danger");
+      rightStat.classList.add("item-winner");
+      leftStat.classList.add("item-looser");
     } else {
-      leftStat.classList.remove("is-primary");
-      leftStat.classList.add("is-success");
-
-      rightStat.classList.remove("is-primary");
-      rightStat.classList.add("is-danger");
+      leftStat.classList.add("item-winner");
+      rightStat.classList.add("item-looser");
     }
   });
 };
 
-const movieMarkup = function (movieDetail) {
+const itemMarkup = function (itemDetail) {
   const dollars = parseInt(
-    movieDetail.BoxOffice.replace(/\$/g, "").replace(/,/g, "")
+    itemDetail.BoxOffice.replace(/\$/g, "").replace(/,/g, "")
   );
-  const metascore = parseInt(movieDetail.Metascore);
-  const imdbRating = parseFloat(movieDetail.imdbRating);
-  const imdbVotes = parseInt(movieDetail.imdbVotes.replace(/,/g, ""));
-  const awards = movieDetail.Awards.split(" ").reduce((prev, word) => {
+  const metascore = parseInt(itemDetail.Metascore);
+  const imdbRating = parseFloat(itemDetail.imdbRating);
+  const imdbVotes = parseInt(itemDetail.imdbVotes.replace(/,/g, ""));
+  const awards = itemDetail.Awards.split(" ").reduce((prev, word) => {
     const value = parseInt(word);
     if (isNaN(value)) {
       return prev;
@@ -107,39 +103,37 @@ const movieMarkup = function (movieDetail) {
   }, 0);
 
   return `
-<article class="media">
-<figure class="media-left">
-<p class="image">
-<img src="${movieDetail.Poster}" />
-</p>
+<article class="item">
+<figure class="item-left">
+<img src="${itemDetail.Poster}" />
 </figure>
-<div class="media-content">
-<div class="content">
-<h1>${movieDetail.Title}</h1>
-<h4>${movieDetail.Genre}</h4>
-<p>${movieDetail.Plot}</p>
-</div>
-</div>
+<figure class="item-right">
+<h1>${itemDetail.Title}</h1>
+<h4>${itemDetail.Genre}</h4>
+<p>${itemDetail.Plot}</p>
+</figure>
 </article>
-<article data-value="${awards}" class="notification is-primary">
-<p class="title">${movieDetail.Awards}</p>
+<div class="item-info mar-t">
+<article data-value="${awards}">
+<p class="title">${itemDetail.Awards}</p>
 <p class="subtitle">Awards</p>
 </article>
-<article data-value="${dollars}" class="notification is-primary">
-<p class="title">${movieDetail.BoxOffice}</p>
+<article data-value="${dollars}">
+<p class="title">${itemDetail.BoxOffice}</p>
 <p class="subtitle">Box Office</p>
 </article>
-<article data-value="${metascore}" class="notification is-primary">
-<p class="title">${movieDetail.Metascore}</p>
+<article data-value="${metascore}">
+<p class="title">${itemDetail.Metascore}</p>
 <p class="subtitle">Meta Score</p>
 </article>
-<article  data-value="${imdbRating}" class="notification is-primary">
-<p class="title">${movieDetail.imdbRating}</p>
+<article  data-value="${imdbRating}">
+<p class="title">${itemDetail.imdbRating}</p>
 <p class="subtitle">IMDB Rating</p>
 </article>
-<article data-value="${imdbVotes}" class="notification is-primary">
-<p class="title">${movieDetail.imdbVotes}</p>
+<article data-value="${imdbVotes}">
+<p class="title">${itemDetail.imdbVotes}</p>
 <p class="subtitle">IMDB Votes</p>
 </article>
+</div>
 `;
 };

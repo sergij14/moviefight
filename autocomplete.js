@@ -10,12 +10,10 @@ export const createAutoComplete = function ({
   root.insertAdjacentHTML(
     "afterbegin",
     `
-    <label><b>Search:</b></label>
+    <label  class="label mar-b"><b>Search:</b></label>
     <input class="input"/>
     <div class="dropdown">
-    <div class="dropdown-menu">
       <div class="results"></div>
-    </div>
     </div>
     `
   );
