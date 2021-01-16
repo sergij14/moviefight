@@ -1,3 +1,6 @@
+import "regenerator-runtime/runtime";
+import "core-js/stable";
+
 import * as autocomplete from "./autocomplete.js";
 
 const autocompleteConfig = {
